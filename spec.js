@@ -1,56 +1,31 @@
 define({
 
-	foo: document,
-
-	bar: { $ref: 'foo' },
-
-	myFunc: {
-		expr: {
-			body: 'alert(e.target.textContent);',
-			params: ['e']
-		}
-	},
-
 	body: {
 		getElement: document.body,
-		states: {
+		classMap: {
+			// preferred format
 			foo: ['on:foo-on', 'off:foo-off'],
-			bar: ['true:bar-on', 'false:bar-off']
-		},
-//		init: {
-//			addEventListener: [
-//				'mouseover',
-//				{ $ref: 'expr!this.style.color="red";' },
-//				false
-//			]
-//		},
-//		ready: {
-//			addEventListener: [
-//				'click',
-//				{ $ref: 'myFunc' },
-//				false
-//			]
-//		},
-//		insert: {
-//			at: document
-//		}
+			bar: ['true:bar-on', 'false:bar-off'],
+			// alternate format
+			baz: 'one:lonely two:company three:crowd four:not-allowed',
+			// non-mapped format
+			simple: 'simple-one simple-two simple-three'
+		}
 	},
 
 	controller: {
 		prototype: {
-			module: 'wire-css/controller/controller'
+			module: 'wire-css/controller'
 		},
 		properties: {
 			body: { $ref: 'body' },
-			css: { module: 'wire-css/css' }
+			css: { module: 'wire-oocss/oocss' }
 		},
 		init: 'init'
 	},
 
-	expr: { module: 'wire-expr/expr' },
-	css: { module: 'wire-css/oocss' },
-	dom: { module: 'wire/dom' },
-	connect: { module: 'wire/on' },
-	debug: { module: 'wire/debug' }
+//	debug: { module: 'wire/debug' },
+//	dom: { module: 'wire/dom' },
+	css: { module: 'wire-oocss/oocss' }
 
 });
