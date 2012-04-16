@@ -15,17 +15,17 @@ define({
 
 	controller: {
 		prototype: {
-			module: 'wire-css/controller'
+			module: 'wire-oocss/controller'
 		},
 		properties: {
 			body: { $ref: 'body' },
-			css: { module: 'wire-oocss/oocss' }
+			oocss: { module: 'wire-oocss/oocss' }
 		},
 		init: 'init'
 	},
 
 //	debug: { module: 'wire/debug' },
-//	dom: { module: 'wire/dom' },
+	dom: { module: 'wire/dom' },
 	css: { module: 'wire-oocss/oocss' }
 
 });

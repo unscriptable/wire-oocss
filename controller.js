@@ -1,10 +1,10 @@
 define({
 
 	init: function () {
-		this.css.states(this.body, {
+		this.oocss.states(this.body, {
 			mode: ['foo:foo-mode', 'bar:bar-mode']
 		});
-		this.css.set(this.body, 'mode.foo');
+		this.oocss.set(this.body, 'mode.foo');
 	}
 
 });
