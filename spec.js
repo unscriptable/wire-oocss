@@ -1,7 +1,7 @@
 define({
 
-	body: {
-		getElement: document.body,
+	el: {
+		getElement: { $ref: 'dom.all!.test' },
 		classMap: {
 			// preferred format
 			foo: ['on:foo-on', 'off:foo-off'],
@@ -18,7 +18,7 @@ define({
 			module: 'wire-oocss/controller'
 		},
 		properties: {
-			body: { $ref: 'body' },
+			body: { $ref: 'el' },
 			oocss: { module: 'wire-oocss/oocss' }
 		},
 		init: 'init'

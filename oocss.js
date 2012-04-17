@@ -213,7 +213,6 @@ define(['wire/dom/base', 'when'], function (base, when) {
 	function normalizeGroup (group) {
 		var isArr, map, imap, sname, pair, states, string;
 
-		isArr = isArray(group);
 		map = {};
 		imap = {};
 		states = [];
@@ -221,6 +220,8 @@ define(['wire/dom/base', 'when'], function (base, when) {
 		if (isString(group)) {
 			group = group.split(splitAtSpacesOrCommasRx);
 		}
+
+		isArr = isArray(group);
 
 		// could be an array or object at this point
 		for (sname in group) {
@@ -260,7 +261,7 @@ define(['wire/dom/base', 'when'], function (base, when) {
 
 		function translateTokens (tokens, map) {
 			if (!tokens) tokens = '';
-			return tokens.replace(/(^|\s+)([^\s]+)/, function (m, s, word) { // TODO: hoist regexp
+			return tokens.replace(/(^|\s+)([^\s]+)/g, function (m, s, word) { // TODO: hoist regexp
 				var trans = map[word];
 				return trans ? s + trans : '';
 			});
@@ -285,7 +286,7 @@ define(['wire/dom/base', 'when'], function (base, when) {
 			}
 		}
 
-		return { adds: adds, removes: removes };
+		return { adds: adds.join(' '), removes: removes.join(' ') };
 	}
 
 
@@ -364,21 +365,21 @@ define(['wire/dom/base', 'when'], function (base, when) {
 	/**
 	 * Adds and removes class names to a tokenized, space-delimited string.
 	 * @private
-	 * @param className {String} current className
-	 * @param removes {Array} class names to remove
-	 * @param adds {Array} class names to add (note: required!)
-	 * @returns {String} modified className
+	 * @param className {String} current set of tokens
+	 * @param removes {String} tokens to remove
+	 * @param adds {String} tokens to add (note: required!)
+	 * @returns {String} modified tokens
 	 */
 	function spliceClassNames (className, removes, adds) {
 		var rx, strip, leftovers;
 		// create regex to find all removes *and adds* since we're going to
 		// remove them all to prevent duplicates.
-		removes = removes.join('|');
+		removes = removes.replace(/\s+/, '|');
 		rx = new RegExp(removeRxParts.join(removes), 'g');
 		// remove and clean up whitespace
 		leftovers = className.replace(rx, '').replace(trimLeadingRx, '');
 		// put the adds back in
-		return (leftovers ? [leftovers].concat(adds) : adds).join(' ');
+		return leftovers ? leftovers + ' ' + adds : adds;
 	}
 
 	return oocssScope;
